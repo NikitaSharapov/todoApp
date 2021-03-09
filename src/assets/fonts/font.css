@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'IBMPlexSans-Regular';
+  src: local('IBMPlexSans-Regular'), local('IBMPlexSans-Regular'), url('IBMPlexSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexSans-SemiBold';
+  src: local('IBMPlexSans-SemiBold'), local('IBMPlexSans-SemiBold'), url('IBMPlexSans-SemiBold.ttf') format('truetype');
+}
