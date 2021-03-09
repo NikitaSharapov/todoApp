@@ -1,11 +1,12 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Wrapper } from '../../../layout/wrapper';
 import { TodoAddForm } from '../../app/todo';
 import { NavButton } from '../button';
 import { Logo } from '../logo';
 
-const Nav = styled.div`
+export const Nav = styled.div`
   width: 1440px;
   background: #fff;
   margin: 0 auto;
@@ -47,7 +48,7 @@ export const TopNav: React.FC = () => {
         <NavContent>
           <Logo />
           <TodoAddForm />
-          <NavButton title={'Выйти'}/>
+          <NavLink to="/auth"><NavButton title={'Выйти'}/></NavLink>
         </NavContent>
       </Wrapper>
     </Nav>

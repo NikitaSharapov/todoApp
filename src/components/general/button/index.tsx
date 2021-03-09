@@ -23,6 +23,7 @@ const FormButtonTitle = styled.a`
   padding:10px 20px;
   border-radius: 5px;
   text-align: center;
+  cursor: pointer;
 `
 
 interface IFormButton {
@@ -42,6 +43,7 @@ const AddNewtodoButtonTitle = styled.a`
   border-radius: 5px;
   margin: 0 20px;
   text-align: center;
+
 `
 
 interface IAddNewtodoButton {

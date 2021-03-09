@@ -8,6 +8,12 @@ const BigTitle = styled.p`
   padding-left:20px;
 `
 
+export const FormTitle = styled.p`
+  font-family: IBMPlexSans-Regular;
+  padding-bottom:15px;
+  font-size: 20px;
+`
+
 const AppItemTitle = styled.p`
   font-size: 18px;
   display: grid;

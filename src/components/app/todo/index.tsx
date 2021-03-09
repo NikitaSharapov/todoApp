@@ -72,7 +72,7 @@ const FormInput = styled.input`
 export const TodoAddForm: React.FC = (props) => {
   return (
     <TodoAddContainer>
-      <FormInput type="text" placeholder="Введиет новую задачу"/>
+      <FormInput type="text" placeholder="Введите новую задачу"/>
       <FormButton title={'Добавить'} />
     </TodoAddContainer>
   )
