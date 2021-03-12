@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../../../assets/images/Logo.svg';
+import logo from '../../../assets/images/Logo.png';
 
 const LogoContainer = styled.div`
   display:grid;

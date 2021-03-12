@@ -19,8 +19,23 @@ body{
   margin: 0 auto;
   width: 1440px;
   background: #F7F6F6;
+  @media ${props =>media.desktop1440}{
+    width: 100%;
+  }
 }
+
 `
+export const media ={
+  phone: "(max-width: 425px)",
+  tablet: "(max-width: 868px) and (min-width: 425px)",
+  desktop1200: "(max-width: 1200px)",
+  desktop1440: "(max-width: 1440px)",
+  desktop1340: "(max-width: 1340px)",
+  desktop1000: "(max-width: 1000px)",
+  desktop850: "(max-width: 850px)",
+  desktop750: "(max-width: 750px)",
+  desktop550: "(max-width: 550px)",
+}
 
 ReactDOM.render(
   <React.StrictMode>

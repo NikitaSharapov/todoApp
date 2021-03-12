@@ -1,13 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { media } from '../../..';
 import { Wrapper } from '../../../layout/wrapper';
-import { TodoAddForm } from '../../app/todo';
-import { NavButton } from '../button';
+import { PhoneTodoAddForm, TodoAddForm } from '../../app/todo';
+import { BotNavButton, NavButton } from '../button';
 import { Logo } from '../logo';
+import { BiDotsHorizontalRounded } from "react-icons/bi";
+import Popup from 'reactjs-popup';
+import { MobileMenu } from '../menu';
 
 export const Nav = styled.div`
-  width: 1440px;
   background: #fff;
   margin: 0 auto;
   height: 80px;
@@ -15,13 +18,30 @@ export const Nav = styled.div`
   -webkit-box-shadow: 1px 3px 13px -6px rgba(0,0,0,0.65);
   -moz-box-shadow: 1px 3px 13px -6px rgba(0,0,0,0.65);
   box-shadow: 1px 3px 13px -6px rgba(0,0,0,0.65);
+  @media ${props =>media.desktop750}{
+    height: 60px;
+  } 
 `
 const NavContent = styled.div`
   display:grid;
   grid-template:80px/auto 3fr  auto;
   align-items: center;
+  @media ${props =>media.desktop750}{
+    display: none;
+  } 
 `
-
+const PhoneNavContent = styled.div`
+  display:none;
+  grid-template:80px/1fr;
+  align-items: center;
+  justify-items: flex-end;
+  @media ${props =>media.desktop750}{
+    display: grid;
+  } 
+  @media ${props =>media.desktop750}{
+    grid-template:60px/1fr;
+  } 
+`
 // export const AppNav = styled.div`
 // display:grid;
 // grid-template:1fr/400px auto;
@@ -29,8 +49,7 @@ const NavContent = styled.div`
 // align-items: center;
 // `
 
-export const BotNav = styled.div`
-  width: 1440px;
+const BNav = styled.div`
   background: #fff;
   height: 50px;
   border-radius: 15px 15px 0 0;
@@ -50,7 +69,28 @@ export const TopNav: React.FC = () => {
           <TodoAddForm />
           <NavLink to="/auth"><NavButton title={'Выйти'}/></NavLink>
         </NavContent>
+        <PhoneTopNav />
       </Wrapper>
     </Nav>
+  );
+}
+
+export const PhoneTopNav: React.FC = () => {
+  return (
+    <PhoneNavContent>
+      <Popup trigger={<div><BiDotsHorizontalRounded fontSize={45}/></div>} position={['bottom center']} closeOnDocumentClick>
+        <MobileMenu />
+      </Popup>
+    </PhoneNavContent>
+  );
+}
+
+export const BotNav: React.FC = () => {
+  return (
+    <BNav>
+      <Popup trigger={<div><BotNavButton title={'Создать задачу'}/></div>} position={['top center']} closeOnDocumentClick>
+        <PhoneTodoAddForm />
+      </Popup>
+    </BNav>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { media } from '../../..';
 
 const BigTitle = styled.p`
   font-family: IBMPlexSans-SemiBold;
@@ -19,6 +20,7 @@ const AppItemTitle = styled.p`
   display: grid;
   grid-template: 1fr/1fr;
   justify-self: flex-start;
+  
 `
 
 interface ITitle {
