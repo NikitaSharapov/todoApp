@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { media } from '../../..';
 import { Wrapper } from '../../../layout/wrapper';
@@ -9,7 +9,7 @@ import { Logo } from '../logo';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Popup from 'reactjs-popup';
 import { MobileMenu } from '../menu';
-import { logout } from '../../../utils/fetch';
+import { AuthContext } from '../../../context/authContext';
 
 export const Nav = styled.div`
   background: #fff;
@@ -62,13 +62,19 @@ const BNav = styled.div`
 `
 
 export const TopNav: React.FC = () => {
+  const auth = useContext(AuthContext);
+  const history = useHistory();
+  const logoutHandler =() =>{
+    auth.logout();
+    history.push('/auth');
+  }
   return (
     <Nav>
       <Wrapper>
         <NavContent>
           <Logo />
           <TodoAddForm />
-          <NavLink to="/auth" ><NavButton title={'Выйти'} onClick={()=>logout()}/></NavLink>
+          <NavButton title={'Выйти'} onClick={()=>{logoutHandler()}}/>
         </NavContent>
         <PhoneTopNav />
       </Wrapper>

@@ -7,6 +7,7 @@ const NavButtonTitle = styled.p`
   font-size:20px;
   display: grid;
   justify-content:flex-end;
+  cursor: pointer;
 `
 
 interface INavButton {
@@ -72,11 +73,12 @@ const SubmitButton= styled.input`
 interface ISubmitFormButton {
   type: string;
   value: string;
+  disabled?: boolean;
 }
 
 export const SubmitFormButton: React.FC<ISubmitFormButton> = (props) => {
   return (
-    <SubmitButton {...props} type={props.type} value={props.value} />
+    <SubmitButton {...props} type={props.type} value={props.value}  disabled={props.disabled}/>
   );
 }
 

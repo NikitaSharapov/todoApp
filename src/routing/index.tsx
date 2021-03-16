@@ -8,10 +8,10 @@ export const useRoutes = (isAuthenticated: boolean) => {
   if(isAuthenticated){
     return(
       <Switch>
-        <Route component={TodoApp} path="/app"/>
-        <Route component={Reg} path="/reg"/>
-        <Route component={Auth} path="/auth"/>
-        <Redirect to={'/auth'}/>
+        <Route component={TodoApp} path="/app" exact/>
+        <Route component={Reg} path="/reg" exact/>
+        <Route component={Auth} path="/auth" exact/>
+        <Redirect to={'/app'}/>
       </Switch>
     )
   }

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink} from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import { media } from '../../..';
-import { sendAuthForm, sendRegForm } from '../../../utils/fetch';
+import { media } from '../../..'; 
 import { FormButton, SubmitFormButton, WhiteFormButton } from '../../general/button';
 import { ErrorTitle, FormTitle } from '../../general/title';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import config from '../../../config';
+import { useHttp } from '../../../utils/hooks/http.hook';
+import { AuthContext } from '../../../context/authContext';
 
 const FormContent = styled.form`
   display:grid;
@@ -43,20 +45,28 @@ const AuthFormSchema = yup.object().shape({
 });
 
 export const AuthForm: React.FC = (props) =>{
+  const auth = useContext(AuthContext);
+  const history = useHistory();
   const {register, handleSubmit, formState: { errors }} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
-  const onSubmit = (data: any) => {
+  const {loading, request, error, clearError} = useHttp()
+  const onSubmit = async (data: any) => {
     const formData = {
       user: {
         login: data.login,
-        email: data.email,
         password: data.pass,
       }
     }
-    sendAuthForm(formData);
-    // history.push('/app');
+    try {
+      const data = await request(
+        config.API_HOST + '/api/users/signin/',
+        'POST',
+         formData,
+      );
+      auth.login(data.token);
+      history.push('/app');
+    } catch (e) {}
+    
   };
-  const token = localStorage.getItem('token');
-  console.log('token ', token);
   return (
     <>
       <FormContent onSubmit={handleSubmit(onSubmit)}>
@@ -70,7 +80,7 @@ export const AuthForm: React.FC = (props) =>{
         <FormNavButton>
           <NavLink to="/reg"><WhiteFormButton title={'Регистрация'}/></NavLink>
           {/* <NavLink to="/app"><WhiteFormButton title={'app'}/></NavLink> */}
-          <SubmitFormButton type="submit" value="Подтвердить" />
+          <SubmitFormButton type="submit" value="Подтвердить" disabled={loading} />
         </FormNavButton>
       </FormContent>
     </>
@@ -110,16 +120,31 @@ const RegFormSchema = yup.object().shape({
 });
 
 export const RegForm: React.FC = (props) =>{
+  const auth = useContext(AuthContext);
+  const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<InputsReg>({resolver: yupResolver(RegFormSchema),});
-  const  onSubmit  = (data: any) => {
+  const {loading, request, error, clearError} = useHttp()
+  const onSubmit = async (data: any) => {
     const formData = {
       user: {
-        email: data.email,
         login: data.login,
+        email: data.email,
         password: data.pass,
       }
     }
-    sendRegForm(formData);
+    console.log('formData ', formData);
+    
+    try {
+      const data = await request(
+        config.API_HOST + '/api/users/signup/',
+        'POST',
+         formData, 
+      );
+      auth.login(data.token);
+      history.push('/app');
+      
+    } catch (e) {}
+    
   };
   return (
     <>
@@ -135,7 +160,7 @@ export const RegForm: React.FC = (props) =>{
           {errors.pass && <ErrorTitle>{errors.pass.message}</ErrorTitle>}
           <FormNavButton>
             <NavLink to="/auth"><WhiteFormButton title={'Авторизация'}/></NavLink>
-            <SubmitFormButton type="submit" value="Подтвердить"/>
+            <SubmitFormButton type="submit" value="Подтвердить" disabled={loading}/>
           </FormNavButton>
       </FormContent>
     </>
@@ -208,3 +233,7 @@ export const TodoItemForm: React.FC<IFormContainer> = (props) =>{
     </FormContainer>
   )
 }
+function formState(arg0: string, formState: any) {
+  throw new Error('Function not implemented.');
+}
+
