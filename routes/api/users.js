@@ -12,59 +12,53 @@ router.post('/signup', auth.optional, async (req, res, next) => {
   const { body: { user } } = req; 
   const oldUser = await User.findOne({login: user.login});
   if(oldUser){
-    return res.status(200).json({
+    return res.status(400).json({
        message: 'Логин уже существует',
      });
   }
   if(!user.login) {
-    return res.status(200).json({
+    return res.status(400).json({
         message: 'Требуется логин',
     });
   }
   if((user.login).length<1) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Логин слишком короткий',
   });
   }
   if((user.login).length>20) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Логин слишком большой',
   });
   }
   if(!user.password) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Требуется пароль',
   });
   }
   if((user.password).length>20) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Пароль слишком большой',
   });
   }
   if((user.password).length<4) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Пароль слишком маленький',
   });
   }
   if(!(user.email).includes('@')) {
-    return res.status(200).json({
-      message: 'Эль. адрес не найден',
+    return res.status(400).json({
+      message: 'Некорректный эль. адрес',
   });
   }
 
   if(!(user.email).includes('.')) {
-    return res.status(200).json({
-      message: 'Эль. адрес не найден',
-  });
-  }
-
-  if((user.email).length<5) {
-    return res.status(200).json({
-      message: 'Эль. адрес слишком короткий',
+    return res.status(400).json({
+      message: 'Некорректный эль. адрес',
   });
   }
   if((user.email).length>30) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: 'Эль. адрес слишком большой',
   });
   }
@@ -72,7 +66,7 @@ router.post('/signup', auth.optional, async (req, res, next) => {
     const finalUser = new User(user);
     finalUser.setPassword(user.password);
       return finalUser.save()
-    .then(() => res.json({ token: finalUser.toAuthJSON().token }));
+    .then(() => res.status(201).json({ token: finalUser.toAuthJSON().token }));
 }
 
 });
@@ -81,22 +75,20 @@ router.post('/signup', auth.optional, async (req, res, next) => {
 //запрос на авторизацию
 router.post('/signin', auth.optional, (req, res, next) => {
   const { body: { user } } = req;
-
   if(!user.login) {
-    return res.status(200).json({
+    return res.status(401).json({
       message: 'Ошибка авторизации',
   });
   }
-
   if(!user.password) {
-    return res.status(200).json({
+    return res.status(401).json({
       message: 'Ошибка авторизации',  
   });
   }
 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if(err) {
-      return res.status(200).json({
+      return res.status(401).json({
         message: 'Ошибка авторизации',
     }); 
     }
@@ -108,18 +100,10 @@ router.post('/signin', auth.optional, (req, res, next) => {
       return res.json({ token: user.toAuthJSON().token });
     }
 
-    return res.status(200).json({
+    return res.status(401).json({
       message: 'Ошибка авторизации',
   });
   })(req, res, next);
-});
-
-//запрос на выход авторизованного пользователя
-router.get('/signout', auth.required, (req, res, next) => {
-    req.logout();
-    return res.status(200).json({
-      message: 'Вы вышли из аккаунта',
-  });
 });
 
 //запрос на удаление авторизованного пользователя
@@ -129,12 +113,12 @@ router.delete('/delete', auth.required, (req, res, next) => {
   return User.findOneAndRemove({_id:id})
     .then((user) => {
       if(!user) {
-        return res.status(200).json({
+        return res.status(404).json({
           message: 'Пользователь не найден',
       });
       }
       
-      return res.status(200).json({
+      return res.status(410).json({
         message: 'Пользователь удалён',
     }),req.logout(); ///вопрлс логаута
     });

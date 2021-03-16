@@ -23,35 +23,35 @@ router.post('/todolist/add',auth.required, async (req,res)=>{
   const { payload } = req;
   const { body: { todo } } = req;
       if(!todo.title) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: {
             title: 'Заголовок обязателен',
           },
         });
       }
       if((todo.title).length<1) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: {
               title: 'Слишком мало символов',
             },
           });
       }
       if((todo.title).length>=41) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: {
               title: 'Слишком много символов',
             },
           });
       }
       if((todo.desc).length<1) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: {
               desc: 'Слишком мало символов',
             },
           });
       }
       if((todo.desc).length>=100) {
-        return res.status(200).json({
+        return res.status(400).json({
             message: {
               desc: 'Слишком много символов',
             },
@@ -64,7 +64,7 @@ router.post('/todolist/add',auth.required, async (req,res)=>{
             creater:req.payload.id
      });
      await newTodo.save();
-        return res.status(200).json({
+        return res.status(201).json({
             message: 'Задача добавлена'
         });
       }
@@ -82,11 +82,11 @@ router.delete('/todolist/delete/:id',auth.required, async (req,res)=>{
     }        
     const idCheck = await Todo.findOne({_id: ObjectID(req.params.id)});
     if(idCheck){
-        return await Todo.deleteOne({_id: ObjectID(req.params.id)}),res.status(200).json({
+        return await Todo.deleteOne({_id: ObjectID(req.params.id)}),res.status(410).json({
             message: 'Задача удалена'
         });
     }
-    return res.status(200).json({
+    return res.status(404).json({
         message: 'Задача не найдена'
     });
  

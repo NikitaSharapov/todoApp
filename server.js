@@ -60,7 +60,7 @@ async function start(){
         });
 
     } catch (e) {
-        res.send("Server can`t start");
+        console.log("Server can`t start");
         console.log(e);
     }
 }
