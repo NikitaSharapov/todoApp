@@ -23,6 +23,13 @@ const AppItemTitle = styled.p`
   
 `
 
+export const ErrorTitle = styled.p`
+  font-family: IBMPlexSans-Regular;
+  padding-bottom:15px;
+  padding-left: 5px;
+  font-size: 14px;
+`
+
 interface ITitle {
   title: string;
 }

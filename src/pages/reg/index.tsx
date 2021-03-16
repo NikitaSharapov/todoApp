@@ -1,8 +1,8 @@
 import React from 'react';
 import {  Formlayout, RegForm } from '../../components/app/form';
-import { BotNav, Nav } from '../../components/general/nav';
+import { EmptyBotNav, Nav } from '../../components/general/nav';
 import { TodoAppLayout } from '../../layout/app';
-import useWindowDimensions from '../../utils/index';
+import useWindowDimensions from '../../utils/hooks/hook.windowDimensions';
 
 
 export const Reg: React.FC = (props) =>{
@@ -15,7 +15,7 @@ export const Reg: React.FC = (props) =>{
         <RegForm />
       </Formlayout>
       </TodoAppLayout>
-      <BotNav />
+      <EmptyBotNav />
     </>
   )
 }

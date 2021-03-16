@@ -1,19 +1,14 @@
 import React from 'react';
-import { Auth } from './pages/auth';
-import { Reg } from './pages/reg';
-import {TodoApp} from './pages/todoApp';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
+import { useRoutes } from './routing';
+
+
 function App() {
+  const routes = useRoutes(false);
   return (
-    <>
-      <BrowserRouter>
-        <Switch>
-          <Route component={TodoApp} path="/app" exact/>
-          <Route component={Reg} path="/reg"/>
-          <Route component={Auth} path="/auth"/>
-        </Switch>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      {routes}
+    </BrowserRouter>
   );
 }
 

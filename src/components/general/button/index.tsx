@@ -11,11 +11,12 @@ const NavButtonTitle = styled.p`
 
 interface INavButton {
   title: string;
+  onClick:() => void;
 }
 
 export const NavButton: React.FC<INavButton> = (props) => {
   return (
-    <NavButtonTitle>{props.title}</NavButtonTitle>
+    <NavButtonTitle {...props}>{props.title}</NavButtonTitle>
   );
 }
 
@@ -38,6 +39,46 @@ export const FormButton: React.FC<IFormButton> = (props) => {
   );
 }
 
+const WFormButtonTitle = styled.p`
+  font-size:14px;
+  background: #fff;
+  padding:10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+`
+
+interface IFormButton {
+  title: string;
+}
+
+export const WhiteFormButton: React.FC<IFormButton> = (props) => {
+  return (
+    <WFormButtonTitle>{props.title}</WFormButtonTitle>
+  );
+}
+
+const SubmitButton= styled.input`
+  font-size:14px;
+  background: #fff;
+  padding:10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+`
+
+interface ISubmitFormButton {
+  type: string;
+  value: string;
+}
+
+export const SubmitFormButton: React.FC<ISubmitFormButton> = (props) => {
+  return (
+    <SubmitButton {...props} type={props.type} value={props.value} />
+  );
+}
 
 const AddNewtodoButtonTitle = styled.p`
   font-size:15px;

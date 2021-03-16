@@ -9,6 +9,7 @@ import { Logo } from '../logo';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Popup from 'reactjs-popup';
 import { MobileMenu } from '../menu';
+import { logout } from '../../../utils/fetch';
 
 export const Nav = styled.div`
   background: #fff;
@@ -67,7 +68,7 @@ export const TopNav: React.FC = () => {
         <NavContent>
           <Logo />
           <TodoAddForm />
-          <NavLink to="/auth"><NavButton title={'Выйти'}/></NavLink>
+          <NavLink to="/auth" ><NavButton title={'Выйти'} onClick={()=>logout()}/></NavLink>
         </NavContent>
         <PhoneTopNav />
       </Wrapper>
@@ -91,6 +92,14 @@ export const BotNav: React.FC = () => {
       <Popup trigger={<div><BotNavButton title={'Создать задачу'}/></div>} position={['top center']} closeOnDocumentClick>
         <PhoneTodoAddForm />
       </Popup>
+    </BNav>
+  );
+}
+
+export const EmptyBotNav: React.FC = () => {
+  return (
+    <BNav>
+
     </BNav>
   );
 }

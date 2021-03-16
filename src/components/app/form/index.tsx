@@ -1,10 +1,15 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import { media } from '../../..';
-import { FormButton } from '../../general/button';
-import { FormTitle } from '../../general/title';
+import { sendAuthForm, sendRegForm } from '../../../utils/fetch';
+import { FormButton, SubmitFormButton, WhiteFormButton } from '../../general/button';
+import { ErrorTitle, FormTitle } from '../../general/title';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-const FormContent = styled.div`
+const FormContent = styled.form`
   display:grid;
   align-items: center;
   width: 280px;
@@ -15,7 +20,7 @@ const FormContent = styled.div`
 
 const FormNavButton = styled.div`
   display:grid;
-  grid-template:1fr/1.5fr 1fr;
+  grid-template:1fr/1fr 1.7fr;
   column-gap: 10px;
 `
 
@@ -27,20 +32,45 @@ const Input = styled.input`
   font-size: 14px;
   border-radius: 5px;
 `
+interface InputsAuth {
+  login: string,
+  pass: string,
+}
 
+const AuthFormSchema = yup.object().shape({
+  login: yup.string().required('Это обязательное поле'),
+  pass: yup.string().required('Это обязательное поле'),
+});
 
 export const AuthForm: React.FC = (props) =>{
+  const {register, handleSubmit, formState: { errors }} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
+  const onSubmit = (data: any) => {
+    const formData = {
+      user: {
+        login: data.login,
+        email: data.email,
+        password: data.pass,
+      }
+    }
+    sendAuthForm(formData);
+    // history.push('/app');
+  };
+  const token = localStorage.getItem('token');
+  console.log('token ', token);
   return (
     <>
-      <FormContent>
+      <FormContent onSubmit={handleSubmit(onSubmit)}>
         <FormTitle>
-          Регистрация
+          Авторизация
         </FormTitle>
-        <Input type="text" placeholder="Введите логин"/>
-        <Input type="password" placeholder="Введите пароль"/>
+        <Input type="text" placeholder="Введите логин" name="login" ref={register}/>
+        {errors.login && <ErrorTitle>{errors.login.message}</ErrorTitle>}
+        <Input type="password" placeholder="Введите пароль" name="pass" ref={register}/>
+        {errors.pass && <ErrorTitle>{errors.pass.message}</ErrorTitle>}
         <FormNavButton>
-          <FormButton title={'Подтвердить'}/>
-          <FormButton title={'Регистрация'}/>
+          <NavLink to="/reg"><WhiteFormButton title={'Регистрация'}/></NavLink>
+          {/* <NavLink to="/app"><WhiteFormButton title={'app'}/></NavLink> */}
+          <SubmitFormButton type="submit" value="Подтвердить" />
         </FormNavButton>
       </FormContent>
     </>
@@ -67,21 +97,46 @@ export const Formlayout: React.FC<IFormlayout> = (props) => {
   )
 }
 
+interface InputsReg {
+  email: string,
+  login: string,
+  pass: string,
+}
+
+const RegFormSchema = yup.object().shape({
+  email: yup.string().required('Это обязательное поле').min(5, 'Слишком мало символов').max(30, 'Превышен лимит символов'),
+  login: yup.string().required('Это обязательное поле').max(20, 'Превышен лимит символов'),
+  pass: yup.string().required('Это обязательное поле').min(4, 'Слишком мало символов').max(20, 'Превышен лимит символов'),
+});
 
 export const RegForm: React.FC = (props) =>{
+  const { register, handleSubmit, formState: { errors } } = useForm<InputsReg>({resolver: yupResolver(RegFormSchema),});
+  const  onSubmit  = (data: any) => {
+    const formData = {
+      user: {
+        email: data.email,
+        login: data.login,
+        password: data.pass,
+      }
+    }
+    sendRegForm(formData);
+  };
   return (
     <>
-      <FormContent>
-        <FormTitle>
-          Авторизация
-        </FormTitle>
-        <Input type="text" placeholder="Введите эль. почту"/>
-        <Input type="text" placeholder="Введите логин"/>
-        <Input type="password" placeholder="Введите пароль"/>
-        <FormNavButton>
-          <FormButton title={'Подтвердить'}/>
-          <FormButton title={'Авторизация'}/>
-        </FormNavButton>
+      <FormContent onSubmit={handleSubmit(onSubmit)}>
+          <FormTitle>
+            Регистрация
+          </FormTitle>
+          <Input type="text" placeholder="Введите эль. почту" name="email" ref={register} />
+          {errors.email && <ErrorTitle>{errors.email.message}</ErrorTitle>}  
+          <Input type="text" placeholder="Введите логин" name="login" ref={register}/>
+          {errors.login && <ErrorTitle>{errors.login.message}</ErrorTitle>}
+          <Input type="password" placeholder="Введите пароль" name="pass" ref={register}/>
+          {errors.pass && <ErrorTitle>{errors.pass.message}</ErrorTitle>}
+          <FormNavButton>
+            <NavLink to="/auth"><WhiteFormButton title={'Авторизация'}/></NavLink>
+            <SubmitFormButton type="submit" value="Подтвердить"/>
+          </FormNavButton>
       </FormContent>
     </>
   )

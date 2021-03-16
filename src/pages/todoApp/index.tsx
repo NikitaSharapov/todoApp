@@ -4,7 +4,7 @@ import { TodoItemForm } from '../../components/app/form';
 import { AppTodoList, TodoItem } from '../../components/app/todo';
 import { BotNav, TopNav } from '../../components/general/nav';
 import { TodoAppLayout } from '../../layout/app';
-import useWindowDimensions from '../../utils/index';
+import useWindowDimensions from '../../utils/hooks/hook.windowDimensions';
 
 
 export const TodoApp: React.FC = (props) =>{
