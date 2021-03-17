@@ -47,8 +47,8 @@ const AuthFormSchema = yup.object().shape({
 export const AuthForm: React.FC = (props) =>{
   const auth = useContext(AuthContext);
   const history = useHistory();
-  const {register, handleSubmit, formState: { errors }} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
-  const {loading, request, error, clearError} = useHttp()
+  const {register, handleSubmit, formState: {errors}} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
+  const {loading, request, error} = useHttp();
   const onSubmit = async (data: any) => {
     const formData = {
       user: {
@@ -64,7 +64,8 @@ export const AuthForm: React.FC = (props) =>{
       );
       auth.login(data.token);
       history.push('/app');
-    } catch (e) {}
+    } catch (e) {
+    }
     
   };
   return (
@@ -73,13 +74,13 @@ export const AuthForm: React.FC = (props) =>{
         <FormTitle>
           Авторизация
         </FormTitle>
+        {error ? <ErrorTitle>{error}</ErrorTitle>: null}
         <Input type="text" placeholder="Введите логин" name="login" ref={register}/>
         {errors.login && <ErrorTitle>{errors.login.message}</ErrorTitle>}
         <Input type="password" placeholder="Введите пароль" name="pass" ref={register}/>
         {errors.pass && <ErrorTitle>{errors.pass.message}</ErrorTitle>}
         <FormNavButton>
           <NavLink to="/reg"><WhiteFormButton title={'Регистрация'}/></NavLink>
-          {/* <NavLink to="/app"><WhiteFormButton title={'app'}/></NavLink> */}
           <SubmitFormButton type="submit" value="Подтвердить" disabled={loading} />
         </FormNavButton>
       </FormContent>
@@ -123,7 +124,7 @@ export const RegForm: React.FC = (props) =>{
   const auth = useContext(AuthContext);
   const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<InputsReg>({resolver: yupResolver(RegFormSchema),});
-  const {loading, request, error, clearError} = useHttp()
+  const {loading, request, error} = useHttp()
   const onSubmit = async (data: any) => {
     const formData = {
       user: {
@@ -132,8 +133,6 @@ export const RegForm: React.FC = (props) =>{
         password: data.pass,
       }
     }
-    console.log('formData ', formData);
-    
     try {
       const data = await request(
         config.API_HOST + '/api/users/signup/',
@@ -152,6 +151,7 @@ export const RegForm: React.FC = (props) =>{
           <FormTitle>
             Регистрация
           </FormTitle>
+          {error ? <ErrorTitle>{error}</ErrorTitle>: null}
           <Input type="text" placeholder="Введите эль. почту" name="email" ref={register} />
           {errors.email && <ErrorTitle>{errors.email.message}</ErrorTitle>}  
           <Input type="text" placeholder="Введите логин" name="login" ref={register}/>
@@ -232,8 +232,5 @@ export const TodoItemForm: React.FC<IFormContainer> = (props) =>{
       </TodoItemFormContent>
     </FormContainer>
   )
-}
-function formState(arg0: string, formState: any) {
-  throw new Error('Function not implemented.');
 }
 

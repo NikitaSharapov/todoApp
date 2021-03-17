@@ -4,7 +4,6 @@ import { EmptyBotNav, Nav } from '../../components/general/nav';
 import { TodoAppLayout } from '../../layout/app';
 import useWindowDimensions from '../../utils/hooks/hook.windowDimensions';
 
-
 export const Auth: React.FC = (props) =>{
   const { height } = useWindowDimensions();
   return (
