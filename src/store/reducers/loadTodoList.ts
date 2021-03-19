@@ -15,7 +15,7 @@ export const loadTodoList = (
 ) => {
   switch (action.type) {
     case LOAD_TODOLIST:
-      return {...state, circles: action.payload};
+      return {...state, todolist: action.payload};
     default:
       return state;
   }

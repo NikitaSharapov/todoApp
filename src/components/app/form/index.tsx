@@ -10,6 +10,8 @@ import * as yup from 'yup';
 import config from '../../../config';
 import { useHttp } from '../../../utils/hooks/http.hook';
 import { AuthContext } from '../../../context/authContext';
+import { useDispatch } from 'react-redux';
+import { fetchLoadTodoList } from '../../../store/actions/loadTodoList';
 
 const FormContent = styled.form`
   display:grid;
@@ -49,6 +51,7 @@ export const AuthForm: React.FC = (props) =>{
   const history = useHistory();
   const {register, handleSubmit, formState: {errors}} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
   const {loading, request, error} = useHttp();
+  const dispatch = useDispatch();
   const onSubmit = async (data: any) => {
     const formData = {
       user: {
@@ -58,11 +61,12 @@ export const AuthForm: React.FC = (props) =>{
     }
     try {
       const data = await request(
-        config.API_HOST + '/api/users/signin/',
+        `${config.API_HOST}/api/users/signin/`,
         'POST',
          formData,
       );
       auth.login(data.token);
+      dispatch(fetchLoadTodoList(data.token));
       history.push('/app');
     } catch (e) {
     }
@@ -124,7 +128,8 @@ export const RegForm: React.FC = (props) =>{
   const auth = useContext(AuthContext);
   const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<InputsReg>({resolver: yupResolver(RegFormSchema),});
-  const {loading, request, error} = useHttp()
+  const {loading, request, error} = useHttp();
+  const dispatch = useDispatch();
   const onSubmit = async (data: any) => {
     const formData = {
       user: {
@@ -140,7 +145,8 @@ export const RegForm: React.FC = (props) =>{
          formData, 
       );
       auth.login(data.token);
-      history.push('/app');
+      dispatch(fetchLoadTodoList(data.token));
+      
       
     } catch (e) {}
     

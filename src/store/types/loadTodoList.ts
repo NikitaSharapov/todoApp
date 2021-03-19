@@ -1,9 +1,9 @@
 import {LOAD_TODOLIST, FETCH_LOAD_TODOLIST} from '../constants/index';
 
 
-// export interface ITodoListObj {
-//   todolist: [];
-// }
+export interface ITodoListObj {
+  todolist: object;
+}
 
 export interface ILoadTodoList {
   payload: string | null;

@@ -1,16 +1,15 @@
-import API_HOST from '../../config/index'
-interface IFile {
-  token: string;
-}
+import config from '../../config/index'
+// interface IFile {
+//   token: string;
+// }
 
-export async function sendToken(file: IFile) {
-  const data = await fetch(API_HOST+'/api/todos/todolist', {
+export async function sendToken(file: string) {
+  const data = await fetch(`${config.API_HOST}/api/todos/todolist`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'multipart/form-data; charset=utf-8',
-      'Authorization': 'Token ' + file.token,
+      'Content-Type': 'application/json; charset=utf-8',
+      'Authorization':  `Token ${file}`,
     },
-  });
-  console.log(data.json());
+  })
   return data.json();
 }
