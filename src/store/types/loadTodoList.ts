@@ -16,5 +16,5 @@ export interface IActionLoadTodoList {
 
 export interface IFecthActionLoadTodoList {
   type: typeof FETCH_LOAD_TODOLIST;
-  payload: object;
+  payload: string;
 }

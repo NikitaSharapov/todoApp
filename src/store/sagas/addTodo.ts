@@ -6,7 +6,7 @@ import { loadTodoList } from '../actions/loadTodoList';
 
 
 function* addTodoWorker(payload: IFecthActionLoadTodoList) {
-  // @ts-ignore
+  // @ts-ignore ts bad (
   const res = yield call(addTodo, payload.payload);
   yield put(loadTodoList(res));
 }

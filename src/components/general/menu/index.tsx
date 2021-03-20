@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 import styled, { keyframes } from 'styled-components';
+import { AuthContext } from '../../../context/authContext';
+import { PhoneTodoAddForm } from '../../app/todo';
 
 const anim = keyframes`
 0% {
@@ -25,17 +29,29 @@ export const MenyContainer = styled.div`
   right: 0;
   top: 0;
 `
-export const MenyItem = styled.p`
+export const MenyItem = styled.button`
   color: #fff;
   font-size: 20px;
+  border: none;
+  background: none;
+  outline: none;
 `
 
 export const MobileMenu: React.FC = () => {
+    const auth = useContext(AuthContext);
+    const history = useHistory();
+    const logoutHandler =() =>{
+    auth.logout();
+    history.push('/auth');
+  }
   return (
     <MenyContainer>
       <MenyItem>Главная</MenyItem>
-      <MenyItem>Создать задачу</MenyItem>
-      <MenyItem>Выйти</MenyItem>
+      
+      <Popup trigger={<div><MenyItem>Создать задачу</MenyItem></div>} position={['top center']} closeOnDocumentClick>
+        <PhoneTodoAddForm />
+      </Popup>
+      <MenyItem onClick={()=>{logoutHandler()}}>Выйти</MenyItem>
     </MenyContainer>
   );
 }

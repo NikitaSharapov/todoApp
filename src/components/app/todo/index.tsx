@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import {  FormButton, GreySubmitFormButton, PhoneFormButton, SubmitFormButton } from '../../general/button';
+import {  GreySubmitFormButton, PhoneFormButton } from '../../general/button';
 import { ItemTitle, Title } from '../../general/title';
 import { BiTrash } from "react-icons/bi";
 import { Scrollbar } from "react-scrollbars-custom";
@@ -94,7 +94,7 @@ const FormInput = styled.input`
   background: #F7F6F6;
 `
 
-interface InputsReg {
+interface InputsAdd {
   title: string,
 }
 
@@ -104,22 +104,21 @@ const TodoAddFormSchema = yup.object().shape({
 
 export const TodoAddForm: React.FC = (props) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm<InputsReg>({resolver: yupResolver(TodoAddFormSchema),});
-  const onSubmit = async (data: any) => {
-    console.log(localStorage.getItem('userToken'));
+  const { register, handleSubmit, setValue} = useForm<InputsAdd>({resolver: yupResolver(TodoAddFormSchema),});
+  const onSubmit = async (data: InputsAdd) => {
     const formData = {
       todoItem: {
         todo: {
           title: data.title,
         }
       },
-      token:  JSON.parse(localStorage.getItem('userToken') || '{}'),
     }
     dispatch((fetchAddTodo(formData)));
+    setValue('title', '');
   };
   return (
     <TodoAddContainer onSubmit={handleSubmit(onSubmit)}>
-      <FormInput type="text" placeholder="Введите новую задачу" ref={register} name="title"/>
+      <FormInput type="text" placeholder="Введите новую задачу" ref={register} name="title" autoComplete="off" />
       <GreySubmitFormButton  type="submit" value="Подтвердить" />
     </TodoAddContainer>
   )
@@ -165,7 +164,7 @@ const anim = keyframes`
 `;
 
 
-const PhoneTodoAddContainer = styled.div`
+const PhoneTodoAddContainer = styled.form`
   animation: ${anim} .1s linear;
   padding: 0 10px;
   display:grid;
@@ -190,10 +189,23 @@ const PhoneFormInput = styled.input`
 `
 
 export const PhoneTodoAddForm: React.FC = (props) => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit, setValue } = useForm<InputsAdd>({resolver: yupResolver(TodoAddFormSchema),});
+  const onSubmit = async (data: InputsAdd) => {
+    const formData = {
+      todoItem: {
+        todo: {
+          title: data.title,
+        }
+      },
+    }
+    dispatch((fetchAddTodo(formData)));
+    setValue('title', '');
+  };
   return (
-    <PhoneTodoAddContainer>
-      <PhoneFormInput type="text" placeholder="Введите новую задачу"/>
-      <PhoneFormButton title={'Добавить'} />
+    <PhoneTodoAddContainer onSubmit={handleSubmit(onSubmit)}>
+      <PhoneFormInput type="text" placeholder="Введите новую задачу" ref={register} name="title" autoComplete="off" />
+      <PhoneFormButton  type="submit" />
     </PhoneTodoAddContainer>
   )
 }

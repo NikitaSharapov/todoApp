@@ -148,7 +148,7 @@ export const BotNavButton: React.FC<IBotNavButton> = (props) => {
 }
 
 
-const PhoneFormButtonTitle = styled.p`
+const PhoneFormButtonTitle = styled.button`
   background: #F7F6F6;
   border-radius: 5px;
   display:grid;
@@ -157,14 +157,15 @@ const PhoneFormButtonTitle = styled.p`
   grid-template: 1fr/1fr;
   justify-content: center;
   align-items: center;
+  border: none;
 `
 
 interface IPhoneFormButton {
-  title: string;
+  type: string,
 }
 
 export const PhoneFormButton: React.FC<IPhoneFormButton> = (props) => {
   return (
-    <PhoneFormButtonTitle><BiCheck fontSize={20}/></PhoneFormButtonTitle>
+    <PhoneFormButtonTitle ><BiCheck fontSize={20}/></PhoneFormButtonTitle>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { media } from '../../..';
 import { Wrapper } from '../../../layout/wrapper';
