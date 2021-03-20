@@ -1,2 +1,5 @@
 export const LOAD_TODOLIST = 'LOAD_TODOLIST';
 export const FETCH_LOAD_TODOLIST = 'FETCH_UPLOAD_IMAGE';
+
+export const ADD_TODO = 'ADD_TODO';
+export const FETCH_ADD_TODO = 'FETCH_ADD_TODO';

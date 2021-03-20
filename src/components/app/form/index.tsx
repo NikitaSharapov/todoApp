@@ -146,6 +146,7 @@ export const RegForm: React.FC = (props) =>{
       );
       auth.login(data.token);
       dispatch(fetchLoadTodoList(data.token));
+      history.push('/app');
       
       
     } catch (e) {}
@@ -187,7 +188,10 @@ const TextArea = styled.textarea`
 
 
 interface IFormContainer {
-  height: number;
+  height: number,
+  title: string,
+  desc: string,
+  key: string,
 }
 
 const FormContainer = styled.div<IFormContainer>`
@@ -229,8 +233,8 @@ export const TodoItemForm: React.FC<IFormContainer> = (props) =>{
   return (
     <FormContainer  {...props} >
       <TodoItemFormContent >
-        <TodoItemInput type="text" value="Заголовок 1"/>
-        <TextArea placeholder="Описание" />
+        <TodoItemInput type="text" value={props.title} />
+        <TextArea placeholder="Описание" value={props.desc}/>
         <FormNavButton>
           <FormButton title={'Подтвердить'}/>
           <FormButton title={'Удалить'}/>

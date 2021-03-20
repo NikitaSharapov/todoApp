@@ -1,11 +1,15 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import {  FormButton, PhoneFormButton } from '../../general/button';
+import {  FormButton, GreySubmitFormButton, PhoneFormButton, SubmitFormButton } from '../../general/button';
 import { ItemTitle, Title } from '../../general/title';
 import { BiTrash } from "react-icons/bi";
 import { Scrollbar } from "react-scrollbars-custom";
 import { media } from '../../..';
-
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { fetchAddTodo } from '../../../store/actions/addTodo';
+import { useDispatch } from 'react-redux';
 const TodoContainer = styled.div`
   padding-top: 50px;
   width:990px;
@@ -27,7 +31,7 @@ const TodoList = styled.div`
   }
 `
 
-const TodoAddContainer = styled.div`
+const TodoAddContainer = styled.form`
   width: 750px;
   margin:10px 0;
   display:grid;
@@ -90,11 +94,33 @@ const FormInput = styled.input`
   background: #F7F6F6;
 `
 
+interface InputsReg {
+  title: string,
+}
+
+const TodoAddFormSchema = yup.object().shape({
+  title: yup.string().required('Это обязательное поле').min(1, 'Слишком мало символов').max(40, 'Превышен лимит символов'),
+});
+
 export const TodoAddForm: React.FC = (props) => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm<InputsReg>({resolver: yupResolver(TodoAddFormSchema),});
+  const onSubmit = async (data: any) => {
+    console.log(localStorage.getItem('userToken'));
+    const formData = {
+      todoItem: {
+        todo: {
+          title: data.title,
+        }
+      },
+      token:  JSON.parse(localStorage.getItem('userToken') || '{}'),
+    }
+    dispatch((fetchAddTodo(formData)));
+  };
   return (
-    <TodoAddContainer>
-      <FormInput type="text" placeholder="Введите новую задачу"/>
-      <FormButton title={'Добавить'} />
+    <TodoAddContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormInput type="text" placeholder="Введите новую задачу" ref={register} name="title"/>
+      <GreySubmitFormButton  type="submit" value="Подтвердить" />
     </TodoAddContainer>
   )
 }

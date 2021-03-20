@@ -15,6 +15,12 @@ export const FormTitle = styled.p`
   font-size: 20px;
 `
 
+export const EmptyTitle = styled.p`
+  font-family: IBMPlexSans-Regular;
+  text-align: center;
+  font-size: 20px;
+`
+
 const AppItemTitle = styled.p`
   font-size: 18px;
   display: grid;

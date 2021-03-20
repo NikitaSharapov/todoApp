@@ -82,6 +82,29 @@ export const SubmitFormButton: React.FC<ISubmitFormButton> = (props) => {
   );
 }
 
+const GreySubmitButton= styled.input`
+  font-size:18px;
+  background: #F7F6F6;
+  padding:10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+`
+
+interface IGreySubmitFormButton {
+  type: string;
+  value: string;
+  disabled?: boolean;
+}
+
+export const GreySubmitFormButton: React.FC<IGreySubmitFormButton> = (props) => {
+  return (
+    <GreySubmitButton {...props} type={props.type} value={props.value}  disabled={props.disabled}/>
+  );
+}
+
 const AddNewtodoButtonTitle = styled.p`
   font-size:15px;
   background:#fff;
