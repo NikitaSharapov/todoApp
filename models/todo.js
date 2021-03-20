@@ -25,4 +25,4 @@ const todoSchema = new Schema({
     },
 });
 
-module.exports = model('Todo',todoSchema);
+module.exports = model('Todo', todoSchema);

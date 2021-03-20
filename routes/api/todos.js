@@ -8,8 +8,7 @@ const passport = require('passport');
 
 // запрос на просмотр задач 
 router.get('/todolist',auth.required, async(req,res)=>{
-      const { payload } = req;
-      console.log(req);
+     const { payload } = req;
      const todolist= await Todo.find({creater:req.payload.id});
       return res.status(200).json({
         todolist: todolist
@@ -21,6 +20,7 @@ router.get('/todolist',auth.required, async(req,res)=>{
 // запрос на добавление задачи 
 router.post('/todolist/add',auth.required, async (req,res)=>{
   const { payload } = req;
+  console.log(req);
   const { body: { todo } } = req;
       if(!todo.title) {
         return res.status(400).json({
@@ -29,6 +29,22 @@ router.post('/todolist/add',auth.required, async (req,res)=>{
           },
         });
       }
+      if(todo.desc){
+        if((todo.desc).length<1) {
+          return res.status(400).json({
+              message: {
+                desc: 'Слишком мало символов',
+              },
+            });
+        }
+        if((todo.desc).length>=100) {
+          return res.status(400).json({
+              message: {
+                desc: 'Слишком много символов',
+              },
+            });
+        }
+       }
       if((todo.title).length<1) {
         return res.status(400).json({
             message: {
@@ -43,20 +59,6 @@ router.post('/todolist/add',auth.required, async (req,res)=>{
             },
           });
       }
-      if((todo.desc).length<1) {
-        return res.status(400).json({
-            message: {
-              desc: 'Слишком мало символов',
-            },
-          });
-      }
-      if((todo.desc).length>=100) {
-        return res.status(400).json({
-            message: {
-              desc: 'Слишком много символов',
-            },
-          });
-      }
       else{
            const newTodo = await new Todo({
             title: todo.title,
@@ -65,7 +67,7 @@ router.post('/todolist/add',auth.required, async (req,res)=>{
      });
      await newTodo.save();
         return res.status(201).json({
-            message: 'Задача добавлена'
+            todo: todo
         });
       }
 })
