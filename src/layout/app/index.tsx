@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 interface ITodoAppLayout {
-  height: number;
+  height?: number;
 }
 
 const TodoLayout = styled.div<ITodoAppLayout>`

@@ -6,7 +6,6 @@ export const loadTodoList = (payload: ILoadTodoList) => ({
   payload,
 });
 
-export const fetchLoadTodoList = (payload: ILoadTodoList) => ({
+export const fetchLoadTodoList = () => ({
   type: FETCH_LOAD_TODOLIST,
-  payload,
 });

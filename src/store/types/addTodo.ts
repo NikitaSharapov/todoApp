@@ -1,4 +1,4 @@
-import {ADD_TODO, FETCH_ADD_TODO} from '../constants/index';
+import {ADD_TODO, FETCH_ADD_TODO} from '../constants';
 
 export interface IAddTodoObj {
   todoItem: {

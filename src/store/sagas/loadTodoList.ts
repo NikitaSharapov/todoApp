@@ -5,9 +5,9 @@ import { FETCH_LOAD_TODOLIST } from '../constants';
 import { loadTodoList } from '../actions/loadTodoList';
 
 
-function* loadTodoListWorker(payload: IFecthActionLoadTodoList) {
+function* loadTodoListWorker() {
   // @ts-ignore ts bag (
-  const res = yield call(sendToken, payload.payload);
+  const res = yield call(sendToken);
   yield put(loadTodoList(res));
 }
 

@@ -23,7 +23,6 @@ body{
     width: 100%;
   }
 }
-
 `
 export const media ={
   phone: "(max-width: 425px)",

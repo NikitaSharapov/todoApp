@@ -3,3 +3,12 @@ export const FETCH_LOAD_TODOLIST = 'FETCH_UPLOAD_IMAGE';
 
 export const ADD_TODO = 'ADD_TODO';
 export const FETCH_ADD_TODO = 'FETCH_ADD_TODO';
+
+export const DELETE_TODO = 'DELETE_TODO';
+export const FETCH_DELETE_TODO = 'FETCH_DELETE_TODO';
+
+export const COMPLETE_TODO = 'COMPLETE_TODO';
+export const FETCH_COMPLETE_TODO = 'FETCH_COMPLETE_TODO';
+
+export const CHANGE_TODO = 'CHANGE_TODO';
+export const FETCH_CHANGE_TODO = 'FETCH_CHANGE_TODO';

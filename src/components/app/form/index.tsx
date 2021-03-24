@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import { media } from '../../..'; 
-import { FormButton, SubmitFormButton, WhiteFormButton } from '../../general/button';
+import { FormButton, GreySubmitFormButton, SubmitFormButton, WhiteFormButton } from '../../general/button';
 import { ErrorTitle, FormTitle } from '../../general/title';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,7 +11,8 @@ import config from '../../../config';
 import { useHttp } from '../../../utils/hooks/http.hook';
 import { AuthContext } from '../../../context/authContext';
 import { useDispatch } from 'react-redux';
-import { fetchLoadTodoList } from '../../../store/actions/loadTodoList';
+import { fetchDeleteTodo } from '../../../store/actions/deleteTodo';
+import { fetchChangeTodo } from '../../../store/actions/changeTodo';
 
 const FormContent = styled.form`
   display:grid;
@@ -22,7 +23,7 @@ const FormContent = styled.form`
 
 const FormNavButton = styled.div`
   display:grid;
-  grid-template:1fr/1fr 1.7fr;
+  grid-template:1fr/1fr 2fr;
   column-gap: 10px;
 `
 
@@ -72,7 +73,7 @@ interface IFormContainer {
   height: number,
   title: string,
   desc: string,
-  key: string,
+  id: string,
 }
 
 const FormContainer = styled.div<IFormContainer>`
@@ -100,7 +101,7 @@ const TodoItemInput = styled.input`
   border-radius: 5px;
 `
 
-const TodoItemFormContent = styled.div`
+const TodoItemFormContent = styled.form`
   display:grid;
   align-items: center;
   width: 450px;
@@ -125,7 +126,6 @@ export const AuthForm: React.FC = (props) =>{
   const history = useHistory();
   const {register, handleSubmit, formState: {errors}} = useForm<InputsAuth>({resolver: yupResolver(AuthFormSchema),});
   const {loading, request, error} = useHttp();
-  const dispatch = useDispatch();
   const onSubmit = async (data: InputsAuth) => {
     const formData = {
       user: {
@@ -140,7 +140,6 @@ export const AuthForm: React.FC = (props) =>{
          formData,
       );
       auth.login(data.token);
-      dispatch(fetchLoadTodoList(data.token));
       history.push('/app');
     } catch (e) {}
   };
@@ -181,7 +180,6 @@ export const RegForm: React.FC = (props) =>{
   const history = useHistory();
   const { register, handleSubmit, formState: { errors } } = useForm<InputsReg>({resolver: yupResolver(RegFormSchema),});
   const {loading, request, error} = useHttp();
-  const dispatch = useDispatch();
   const onSubmit = async (data: InputsReg) => {
     const formData = {
       user: {
@@ -197,7 +195,6 @@ export const RegForm: React.FC = (props) =>{
          formData, 
       );
       auth.login(data.token);
-      dispatch(fetchLoadTodoList(data.token));
       history.push('/app');
     } catch (e) {}
     
@@ -224,16 +221,46 @@ export const RegForm: React.FC = (props) =>{
   )
 }
 
-
+const TodoItemFormSchema = yup.object().shape({
+  title: yup.string().required('Это обязательное поле').max(20, 'Превышен лимит символов'),
+  desc: yup.string().max(200, 'Превышен лимит символов'),
+});
+interface InputsTodoItemForm {
+  title: string,
+  desc: string,
+}
 export const TodoItemForm: React.FC<IFormContainer> = (props) =>{
+  const { register, handleSubmit, setValue } = useForm<InputsTodoItemForm>({resolver: yupResolver(TodoItemFormSchema),});
+  const dispatch = useDispatch();
+  useEffect(() => {
+    setValue('title', props.title);
+    setValue('desc', props.desc);
+  })
+  const onSubmit = async (data: InputsTodoItemForm) => {
+    const formData = {
+      data: {
+        id: props.id,
+        title: data.title,
+        desc: data.desc,
+      }
+    }
+    console.log('data', data);
+    dispatch(fetchChangeTodo(formData));
+  };
+  const handlerDelete = () => {
+    const formData = {
+      id: props.id,
+    }
+    dispatch(fetchDeleteTodo(formData));
+  };
   return (
-    <FormContainer  {...props} >
-      <TodoItemFormContent >
-        <TodoItemInput type="text" value={props.title} />
-        <TextArea placeholder="Описание" value={props.desc}/>
+    <FormContainer {...props} key={props.id}>
+      <TodoItemFormContent onSubmit={handleSubmit(onSubmit)}>
+        <TodoItemInput type="text" name="title" ref={register} placeholder="Заголовок задачи"/>
+        <TextArea placeholder="Описание задачи" name="desc" ref={register}/>
         <FormNavButton>
-          <FormButton title={'Подтвердить'}/>
-          <FormButton title={'Удалить'}/>
+          <FormButton title={'Удалить'} onClick={handlerDelete}/>
+          <GreySubmitFormButton type="submit" value="Подтвердить" />
         </FormNavButton>
       </TodoItemFormContent>
     </FormContainer>

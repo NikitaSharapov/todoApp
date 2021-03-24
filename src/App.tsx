@@ -18,7 +18,7 @@ function App() {
         logout,
         isAuthenticated
       }}>
-        <Router>
+        <Router >
           {routes}
         </Router>
       </AuthContext.Provider>

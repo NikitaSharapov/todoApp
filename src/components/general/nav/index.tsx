@@ -85,7 +85,7 @@ export const TopNav: React.FC = () => {
 export const PhoneTopNav: React.FC = () => {
   return (
     <PhoneNavContent>
-      <Popup trigger={<div><BiDotsHorizontalRounded fontSize={45}/></div>} position={['bottom center']} closeOnDocumentClick>
+      <Popup modal nested trigger={<div><BiDotsHorizontalRounded fontSize={45}/></div>} position={['bottom center']} closeOnDocumentClick>
         <MobileMenu />
       </Popup>
     </PhoneNavContent>

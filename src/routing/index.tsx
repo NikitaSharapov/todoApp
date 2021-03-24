@@ -5,6 +5,7 @@ import { Reg } from '../pages/reg';
 import { TodoApp } from '../pages/todoApp';
 
 export const useRoutes = (isAuthenticated: boolean) => {
+  localStorage.getItem('userToken');
   if(isAuthenticated){
     return(
       <Switch>

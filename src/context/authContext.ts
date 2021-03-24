@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-function zachem_ua_sozdana(arg: any) {};
+function zachem_ua_sozdana(arg: string) {};
 function zachem_ua_sozdana2() {};
 
 export const AuthContext = createContext({

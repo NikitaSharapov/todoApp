@@ -32,11 +32,12 @@ const FormButtonTitle = styled.p`
 
 interface IFormButton {
   title: string;
+  onClick?: ()=>void;
 }
 
 export const FormButton: React.FC<IFormButton> = (props) => {
   return (
-    <FormButtonTitle>{props.title}</FormButtonTitle>
+    <FormButtonTitle {...props}>{props.title}</FormButtonTitle>
   );
 }
 
@@ -153,8 +154,7 @@ const PhoneFormButtonTitle = styled.button`
   border-radius: 5px;
   display:grid;
   width:40px;
-  height:40px
-  grid-template: 1fr/1fr;
+  height: 40px;
   justify-content: center;
   align-items: center;
   border: none;

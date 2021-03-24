@@ -22,10 +22,9 @@ export const EmptyTitle = styled.p`
 
 const AppItemTitle = styled.p`
   font-size: 18px;
-  display: grid;
-  grid-template: 1fr/1fr;
   justify-self: flex-start;
-  
+  padding-top:20px;
+  padding-bottom:20px;
 `
 
 export const ErrorTitle = styled.p`
