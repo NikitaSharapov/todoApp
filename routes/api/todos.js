@@ -9,7 +9,13 @@ router.get('/todolist', auth.required, todoController.todolist );
 // запрос на добавление задачи 
 router.post('/todolist/add',auth.required, todoController.todolist_add);
 
+// запрос на изменение состояния 
+router.post('/todolist/comp',auth.required, todoController.todolist_comp);
+
+// запрос на изменение состояния 
+router.post('/todolist/change',auth.required, todoController.todolist_change);
+
 //запрос на удаление
-router.delete('/todolist/delete/:id',auth.required, todoController.todolist_delete)
+router.post('/todolist/delete',auth.required, todoController.todolist_delete)
 
 module.exports = router;

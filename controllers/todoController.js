@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Todo = mongoose.model('Todo');
 const ObjectID =require('mongodb').ObjectID;
-
 exports.todolist = async function (req, res) {
   const { payload } = req;
   const todolist= await Todo.find({creater:req.payload.id});
@@ -57,28 +56,54 @@ const { body: { todo } } = req;
           creater:req.payload.id
    });
    await newTodo.save();
-      return res.status(201).json({
-          todo: todo
-      });
+   const todolist= await Todo.find({creater:req.payload.id});
+   return res.status(201).json({
+    todolist: todolist
+});
     }
 }
 
-// exports.todolist_delete = async function (req, res) {
-//   const { payload: { id } } = req;
-//   createrCheck =await Room.find({creater:id});
-//   userCheck =await Room.find({userId:id});
-//   if(createrCheck.length == 0 && userCheck.length == 0 ){
-//     return res.status(401).json({
-//         message: 'Ошибка доступа',
-//     });
-//   }        
-//   const idCheck = await Todo.findOne({_id: ObjectID(req.params.id)});
-//   if(idCheck){
-//       return await Todo.deleteOne({_id: ObjectID(req.params.id)}),res.status(410).json({
-//           message: 'Задача удалена'
-//       });
-//   }
-//   return res.status(404).json({
-//       message: 'Задача не найдена'
-//   });
-// }
+exports.todolist_delete = async function (req, res) {
+  const { payload: { id } } = req; 
+  const todoCheck = await Todo.findById({_id: req.body.id});
+  if(todoCheck && req.payload.id===todoCheck.creater){
+      await Todo.deleteOne({_id: req.body.id});
+      const todolist = await Todo.find({creater:req.payload.id});
+      return res.status(200).json({
+        todolist: todolist
+      });
+  }
+  return res.status(404).json({
+      message: 'Задача не найдена'
+  });
+}
+
+exports.todolist_comp = async function (req, res) {
+  const { payload: { data } } = req;
+  const todoCheck = await Todo.findById({_id: req.body.data.id});
+  if(todoCheck && req.payload.id === todoCheck.creater){
+      const upd = await Todo.updateOne({_id: req.body.data.id},{$set:{completed: req.body.data.completed}})
+      const todolist = await Todo.find({creater:req.payload.id});
+      return res.status(200).json({
+        todolist: todolist
+      });
+  }
+  return res.status(404).json({
+      message: 'Задача не найдена'
+  });
+}
+
+exports.todolist_change = async function (req, res) {
+  const { payload: { data } } = req;
+  const todoCheck = await Todo.findById({_id: req.body.data.id});
+  if(todoCheck && req.payload.id === todoCheck.creater){
+      const upd = await Todo.updateOne({_id: req.body.data.id},{$set:{title: req.body.data.title, desc: req.body.data.desc}});
+      const todolist = await Todo.find({creater:req.payload.id});
+      return res.status(200).json({
+        todolist: todolist
+      });
+  }
+  return res.status(404).json({
+      message: 'Задача не найдена'
+  });
+}

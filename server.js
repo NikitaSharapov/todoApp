@@ -32,7 +32,7 @@ app.use(passport.session());
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(err.status).send({
-            message: 'Authenticate error',
+            message: 'Ошибка авторизации',
         });
         return;
     }
