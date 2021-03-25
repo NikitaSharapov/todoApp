@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BigTitle = styled.p`
+export const BigTitle = styled.p`
   font-family: IBMPlexSans-SemiBold;
   padding-bottom:15px;
   font-size: 24px;

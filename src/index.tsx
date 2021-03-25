@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createGlobalStyle} from 'styled-components';
-
 import '../src/assets/fonts/font.css';
+
+
+
 const GlobalStyle = createGlobalStyle`
 *{
   margin: 0;
@@ -32,8 +34,12 @@ export const media ={
   desktop1340: "(max-width: 1340px)",
   desktop1000: "(max-width: 1000px)",
   desktop850: "(max-width: 850px)",
+  desktop800: "(max-width: 800px)",
   desktop750: "(max-width: 750px)",
+  desktop700: "(max-width: 700px)",
   desktop550: "(max-width: 550px)",
+  desktop450: "(max-width: 450px)",
+  desktop400: "(max-width: 400px)",
 }
 
 ReactDOM.render(

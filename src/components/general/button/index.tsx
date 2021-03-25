@@ -12,7 +12,7 @@ const NavButtonTitle = styled.p`
 
 interface INavButton {
   title: string;
-  onClick:() => void;
+  onClick?:() => void;
 }
 
 export const NavButton: React.FC<INavButton> = (props) => {

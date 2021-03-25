@@ -23,6 +23,7 @@ export const Nav = styled.div`
     height: 60px;
   } 
 `
+
 const NavContent = styled.div`
   display:grid;
   grid-template:80px/auto 3fr  auto;

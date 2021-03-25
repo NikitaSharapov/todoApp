@@ -138,7 +138,6 @@ export const TodoAddForm: React.FC = (props) => {
     }
   ];
   const {transcript, resetTranscript } = useSpeechRecognition({ commands });
-  setValue('title', transcript);
   const [message, setMessage] = useState('');
   const onSubmit = (data: InputsAdd) => {
     console.log('data form on submit ',data);
