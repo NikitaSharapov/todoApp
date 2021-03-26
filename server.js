@@ -9,7 +9,7 @@ const Todo = require('./models/todo');
 const session = require('express-session');
 const passportConf = require('./config/passport');
 const morgan = require('morgan');
-const keys= require('./config/keys')
+const keys = require('./config/keys')
 const cors = require('cors');
 const passport  = require('passport');
 //инициализация приложения
@@ -54,7 +54,7 @@ async function start(){
         })
         .then(()=>console.log("DB connected"))
         .catch(error =>console.log(error));
-        app.listen(PORT, () =>{
+        app.listen(PORT, keys.hostname, () => {
             console.log(`Server started on port ${PORT}`);
         });
 
