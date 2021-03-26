@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import styled, { keyframes } from 'styled-components';
 import { AuthContext } from '../../../context/authContext';
@@ -44,10 +44,12 @@ export const MobileMenu: React.FC = () => {
     auth.logout();
     history.push('/auth');
   }
+  const link = () => {
+    history.push('/');
+  }
   return (
     <MenyContainer>
-      <MenyItem>Главная</MenyItem>
-      
+      <MenyItem onClick={()=>{link()}} >Главная</MenyItem>
       <Popup trigger={<div><MenyItem>Создать задачу</MenyItem></div>} position={['top center']} closeOnDocumentClick>
         <PhoneTodoAddForm />
       </Popup>

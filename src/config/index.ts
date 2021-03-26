@@ -1,5 +1,5 @@
 const config ={
-  API_HOST: 'http://localhost:8000'
+  API_HOST: 'https://faraday-lab.ru'
 }
 
 export default config 

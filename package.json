@@ -2,6 +2,7 @@
   "name": "todoapp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://NikitaSharapov.github.io/todoApp",
   "dependencies": {
     "@hookform/resolvers": "^1.3.5",
     "@testing-library/jest-dom": "^5.11.4",
@@ -34,7 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build&&gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +60,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-speech-recognition": "^3.6.0",
     "@types/redux-logger": "^3.0.8",
-    "@types/styled-components": "^5.1.7"
+    "@types/styled-components": "^5.1.7",
+    "gh-pages": "^3.1.0"
   }
 }

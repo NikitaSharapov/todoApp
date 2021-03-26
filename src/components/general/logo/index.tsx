@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../../assets/images/Logo.png';
 
@@ -12,8 +13,12 @@ const LogoTitle = styled.h1`
   font-size:24px;
 `
 export const Logo = () => {
+  const history = useHistory();
+  const link = () => {
+    history.push('/');
+  }
   return(
-    <LogoContainer>
+    <LogoContainer onClick={()=>{link()}}>
       <img src={logo} alt={'logo'}></img>
       <LogoTitle >
         Ту-Ду
