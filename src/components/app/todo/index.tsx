@@ -229,7 +229,7 @@ export const TodoItem: React.FC<ITodoItem> = (props) => {
     <TodoItemContainer>
       <TodoCheck completed={props.completed} id={props.id}/>
       <Popup modal nested trigger={<ItemTitleConteiner ><ItemTitle title={props.title}  /></ItemTitleConteiner>} position={['center center']} closeOnDocumentClick overlayStyle={{background: 'rgba(0,0,0,.4'}}>
-        <TodoItemForm height={props.height} title={props.title} desc={props.desc} key={props.id} id={props.id}/>
+      <TodoItemForm height={props.height} title={props.title} desc={props.desc} key={props.id} id={props.id} />
       </Popup>
       <BiTrash fontSize={20} onClick={handlerDelete} key={props.id} />
     </TodoItemContainer>

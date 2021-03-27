@@ -45,7 +45,7 @@ export const media ={
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <App />
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

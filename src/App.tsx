@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {HashRouter as Router} from 'react-router-dom';
 import { AuthContext } from './context/authContext';
 import { useRoutes } from './routing';
 import { useAuth } from './utils/hooks/auth.hook';
@@ -8,19 +8,17 @@ import {store} from './store';
 
 function App() {
   const {token, login, logout} = useAuth();
-  const isAuthenticated = !!token;
-  const routes = useRoutes(isAuthenticated);
+  const routes = useRoutes();
   return (
     <Provider store={store}>
       <AuthContext.Provider value={{
         token,
         login,
         logout,
-        isAuthenticated
       }}>
-        <Router >
-          {routes}
-        </Router>
+          <Router>
+            {routes}
+          </Router>
       </AuthContext.Provider>
     </Provider>
   );
