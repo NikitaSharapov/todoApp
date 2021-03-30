@@ -7,7 +7,10 @@ import { loadTodoList } from '../actions/loadTodoList';
 function* deleteTodoWorker(payload: IFecthActionDeleteTodo) {
   // @ts-ignore ts bad (
   const res = yield call(deleteTodoFetch, payload.payload);
-  yield put(loadTodoList(res));
+  if(!(res.message)){
+    yield put(loadTodoList(res));
+  }
+  return null
 }
 
 export function* deleteTodoWatcher() {

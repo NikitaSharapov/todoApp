@@ -8,6 +8,7 @@ const LogoContainer = styled.div`
   grid-template: 70px/58px 70px;
   justify-items: center;
   align-items: center;
+  cursor: pointer;
 `
 const LogoTitle = styled.h1`
   font-size:24px;

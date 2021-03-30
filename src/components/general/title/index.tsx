@@ -7,6 +7,11 @@ export const BigTitle = styled.p`
   font-size: 24px;
   padding-left:20px;
 `
+export const VoiceInfoBigitle = styled.p`
+  font-family: IBMPlexSans-SemiBold;
+  font-size: 21px;
+
+`
 
 export const FormTitle = styled.p`
   font-family: IBMPlexSans-Regular;
@@ -32,6 +37,12 @@ export const ErrorTitle = styled.p`
   padding-bottom:15px;
   padding-left: 5px;
   font-size: 14px;
+`
+
+export const VoiceInfoTitle = styled.p`
+  font-family: IBMPlexSans-Regular;
+  padding-bottom:20px;
+  font-size: 18px;
 `
 
 interface ITitle {

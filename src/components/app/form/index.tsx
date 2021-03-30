@@ -74,6 +74,7 @@ interface IFormContainer {
   title: string,
   desc: string,
   id: string,
+  close: ()=> void,
 }
 
 const FormContainer = styled.div<IFormContainer>`
@@ -244,8 +245,8 @@ export const TodoItemForm: React.FC<IFormContainer> = (props) =>{
         desc: data.desc,
       }
     }
-    console.log('data', data);
     dispatch(fetchChangeTodo(formData));
+    props.close();
   };
   const handlerDelete = () => {
     const formData = {

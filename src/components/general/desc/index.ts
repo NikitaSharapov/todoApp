@@ -7,6 +7,7 @@ font-size: 20px;
     text-align: center;
   } 
 `
+
 export const TechDesc = styled.div`
 padding: 100px 100px;
 font-size: 24px;
@@ -16,4 +17,9 @@ font-size: 24px;
   @media ${props =>media.desktop450}{
   font-size: 14px;
   }  
+`
+
+export const VoiceInfoDesc = styled.div`
+  font-size: 14px;
+  padding-bottom:10px
 `

@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { media } from '../../..';
 import { Wrapper } from '../../../layout/wrapper';
 import { PhoneTodoAddForm, TodoAddForm } from '../../app/todo';
-import { BotNavButton, NavButton } from '../button';
+import { BotNavButton, NavButton, VoiceInfoButton } from '../button';
 import { Logo } from '../logo';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import Popup from 'reactjs-popup';
 import { MobileMenu } from '../menu';
 import { AuthContext } from '../../../context/authContext';
+import { ModalVoiceInfo } from '../../app/modalVoiceInfo';
 
 export const Nav = styled.div`
   background: #fff;
@@ -26,7 +27,7 @@ export const Nav = styled.div`
 
 const NavContent = styled.div`
   display:grid;
-  grid-template:80px/auto 3fr  auto;
+  grid-template:80px/auto 3fr auto auto;
   align-items: center;
   @media ${props =>media.desktop750}{
     display: none;

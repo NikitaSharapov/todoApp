@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import {  GreySubmitFormButton, PhoneFormButton } from '../../general/button';
+import {  GreySubmitFormButton, PhoneFormButton, VoiceInfoButton } from '../../general/button';
 import { EmptyTitle, ItemTitle, Title } from '../../general/title';
 import { BiCheck, BiTrash } from "react-icons/bi";
 import { Scrollbar } from "react-scrollbars-custom";
@@ -16,6 +16,8 @@ import { TodoItemForm } from '../form';
 import { fetchDeleteTodo } from '../../../store/actions/deleteTodo';
 import { fetchComplateTodo } from '../../../store/actions/completeTodo';
 import { IRootState } from '../../../store/types/store';
+import { MobileMenu } from '../../general/menu';
+import { ModalVoiceInfo } from '../modalVoiceInfo';
 
 const TodoContainer = styled.div`
   padding-top: 50px;
@@ -42,7 +44,7 @@ const TodoAddContainer = styled.form`
   width: 750px;
   margin:10px 0;
   display:grid;
-  grid-template:1fr /3fr 1fr;
+  grid-template:1fr /3fr 1fr auto;
   column-gap: 20px;
   justify-self: center;
   @media ${props =>media.desktop1340}{
@@ -80,6 +82,7 @@ interface IAppTodoList {
 let todolistArray: any[] = [];
 
 export const AppTodoList: React.FC<IAppTodoList> = (props) => {
+  
   const todolist = useSelector((state: IRootState) => state.loadTodoList.todolist);
   if(todolist){
     todolistArray = Object.values(todolist);
@@ -128,19 +131,16 @@ export const TodoAddForm: React.FC = (props) => {
     {
       command: 'Создать задачу *',
       callback: (todo: any) => {
-        
+        setValue('title', transcript);
         const dataVoice = {
           title: todo,
         }
-        setMessage(`${todo}`);
         onSubmit({...dataVoice});
       }
     }
   ];
   const {transcript, resetTranscript } = useSpeechRecognition({ commands });
-  const [message, setMessage] = useState('');
   const onSubmit = (data: InputsAdd) => {
-    console.log('data form on submit ',data);
     const formData = {
       todoItem: {
         todo: {
@@ -156,13 +156,18 @@ export const TodoAddForm: React.FC = (props) => {
 
   useEffect(() => {
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-      alert("Ups, your browser is not supported voice control!");
+      alert("Ваш браузер не поддерживает голосовое управление");
     }  
   }, []);
   return (
     <TodoAddContainer onSubmit={handleSubmit(onSubmit)} >
       <FormInput type="text" placeholder="Введите новую задачу" ref={register} name="title" autoComplete="off" />
       <GreySubmitFormButton  type="submit" value="Подтвердить" />
+      <Popup modal nested trigger={<div><VoiceInfoButton /></div>} position={['center center']} closeOnDocumentClick overlayStyle={{background: 'rgba(0,0,0,.4'}}>
+      {(close: any) => (
+        <ModalVoiceInfo close={()=>close()} />
+      )}
+      </Popup>
     </TodoAddContainer>
   )
 }
@@ -191,9 +196,22 @@ interface ITodoItem {
 interface ITodoCheck {
   completed: boolean;
   id: string;
+  title: string;
 }
 const TodoCheck: React.FC<ITodoCheck> = (props) => {
   const dispatch = useDispatch();
+  const commands = [
+    {
+      command: 'Отметить задачу *',
+      callback: (todo: any) => {
+        if(todo===props.title){
+          handlerCompleted();
+        }
+      }
+    }
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {transcript, resetTranscript } = useSpeechRecognition({ commands });
   const handlerCompleted = () => {
     let completed = props.completed;
     if(completed === false){
@@ -219,6 +237,18 @@ const TodoCheck: React.FC<ITodoCheck> = (props) => {
 
 export const TodoItem: React.FC<ITodoItem> = (props) => {
   const dispatch = useDispatch();
+  const commands = [
+    {
+      command: 'Удалить задачу *',
+      callback: (todo: any) => {
+        if(todo===props.title){
+          handlerDelete();
+        }
+      }
+    }
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const {transcript, resetTranscript } = useSpeechRecognition({ commands });
   const handlerDelete = () => {
     const formData = {
       id: props.id,
@@ -226,10 +256,12 @@ export const TodoItem: React.FC<ITodoItem> = (props) => {
     dispatch(fetchDeleteTodo(formData));
   };
   return (
-    <TodoItemContainer>
-      <TodoCheck completed={props.completed} id={props.id}/>
-      <Popup modal nested trigger={<ItemTitleConteiner ><ItemTitle title={props.title}  /></ItemTitleConteiner>} position={['center center']} closeOnDocumentClick overlayStyle={{background: 'rgba(0,0,0,.4'}}>
-      <TodoItemForm height={props.height} title={props.title} desc={props.desc} key={props.id} id={props.id} />
+    <TodoItemContainer key={props.id}>
+      <TodoCheck completed={props.completed} id={props.id} title={props.title}/>
+      <Popup modal nested trigger={<ItemTitleConteiner ><ItemTitle title={props.title} /></ItemTitleConteiner>} position={['center center']} closeOnDocumentClick overlayStyle={{background: 'rgba(0,0,0,.4'}}>
+      {(close: any) => (
+      <TodoItemForm height={props.height} title={props.title} desc={props.desc} key={props.id} id={props.id} close={()=>close()}/>
+      )}
       </Popup>
       <BiTrash fontSize={20} onClick={handlerDelete} key={props.id} />
     </TodoItemContainer>
@@ -290,7 +322,7 @@ export const PhoneTodoAddForm: React.FC = (props) => {
   return (
     <PhoneTodoAddContainer onSubmit={handleSubmit(onSubmit)}>
       <PhoneFormInput type="text" placeholder="Введите новую задачу" ref={register} name="title" autoComplete="off" />
-      <PhoneFormButton  type="submit" />
+      <PhoneFormButton />
     </PhoneTodoAddContainer>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BiCheck} from 'react-icons/bi';
+import { BiCheck,  BiMicrophone} from 'react-icons/bi';
 import styled from 'styled-components';
 import { media } from '../../..';
 
@@ -93,16 +93,38 @@ const GreySubmitButton= styled.input`
   border: none;
   width: 100%;
 `
+const GreyBtn = styled.input`
+  font-size:18px;
+  background: #F7F6F6;
+  padding:10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+`
 
 interface IGreySubmitFormButton {
-  type: string;
+  type?: string;
   value: string;
   disabled?: boolean;
 }
 
 export const GreySubmitFormButton: React.FC<IGreySubmitFormButton> = (props) => {
   return (
-    <GreySubmitButton {...props} type={props.type} value={props.value}  disabled={props.disabled}/>
+    <GreySubmitButton {...props} type={props.type} value={props.value}  disabled={props.disabled} />
+  );
+}
+
+interface IGreyButton {
+  type?: string;
+  value: string;
+  onClick: ()=> void;
+}
+
+export const GreyButton: React.FC<IGreyButton> = (props) => {
+  return (
+    <GreyBtn {...props} type={props.type} value={props.value} />
   );
 }
 
@@ -160,12 +182,30 @@ const PhoneFormButtonTitle = styled.button`
   border: none;
 `
 
-interface IPhoneFormButton {
-  type: string,
+export const PhoneFormButton: React.FC = (props) => {
+  return (
+    <PhoneFormButtonTitle><BiCheck fontSize={20}/></PhoneFormButtonTitle>
+  );
 }
 
-export const PhoneFormButton: React.FC<IPhoneFormButton> = (props) => {
+interface IVoiceInfoButton {
+
+}
+
+const VoiceInfoButtonTitle = styled.p`
+  background: #F7F6F6;
+  border-radius: 5px;
+  display:grid;
+  width:40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+`
+
+export const VoiceInfoButton: React.FC<IVoiceInfoButton> = (props) => {
   return (
-    <PhoneFormButtonTitle ><BiCheck fontSize={20}/></PhoneFormButtonTitle>
+    <VoiceInfoButtonTitle ><BiMicrophone fontSize={20}/></VoiceInfoButtonTitle>
   );
 }
