@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/todoApp/static/css/main.8264fabe.chunk.css",
-    "main.js": "/todoApp/static/js/main.994c13e2.chunk.js",
-    "main.js.map": "/todoApp/static/js/main.994c13e2.chunk.js.map",
+    "main.js": "/todoApp/static/js/main.9cda444a.chunk.js",
+    "main.js.map": "/todoApp/static/js/main.9cda444a.chunk.js.map",
     "runtime-main.js": "/todoApp/static/js/runtime-main.bf8afb06.js",
     "runtime-main.js.map": "/todoApp/static/js/runtime-main.bf8afb06.js.map",
     "static/css/2.79922529.chunk.css": "/todoApp/static/css/2.79922529.chunk.css",
@@ -20,13 +20,13 @@
     "static/media/Prnscr3.b9dcbd7d.png": "/todoApp/static/media/Prnscr3.b9dcbd7d.png",
     "static/media/Prnscr4.69a97666.png": "/todoApp/static/media/Prnscr4.69a97666.png",
     "static/media/Prnscr5.a93accd1.png": "/todoApp/static/media/Prnscr5.a93accd1.png",
-    "static/media/mock.26e11994.png": "/todoApp/static/media/mock.26e11994.png"
+    "static/media/mock.221cae4d.png": "/todoApp/static/media/mock.221cae4d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.bf8afb06.js",
     "static/css/2.79922529.chunk.css",
     "static/js/2.1ad9b144.chunk.js",
     "static/css/main.8264fabe.chunk.css",
-    "static/js/main.994c13e2.chunk.js"
+    "static/js/main.9cda444a.chunk.js"
   ]
 }
