@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavButton, WhiteFormButton } from '../../components/general/button';
-import {TechDesc, TopDesc} from '../../components/general/desc';
+import {TopDesc} from '../../components/general/desc';
 import {TopImage, Image} from '../../components/lending/image';
 import {Logo} from '../../components/general/logo';
 import {LendTopNav, TopNavContent} from '../../components/lending/nav';
@@ -14,6 +14,7 @@ import Prnscr1 from '../../assets/images/Prnscr1.png';
 import Prnscr2 from '../../assets/images/Prnscr2.png';
 import Prnscr3 from '../../assets/images/Prnscr3.png';
 import Prnscr4 from '../../assets/images/Prnscr4.png';
+import Prnscr5 from '../../assets/images/Prnscr5.png';
 import { Tech } from '../../components/lending/tech';
 
 
@@ -89,6 +90,17 @@ export const Lending: React.FC = (props) =>{
                </div>
                <Image src={Prnscr4}></Image>
             </OpportunitiesContentRight>
+            <OpportunitiesContentLeft>
+            <Image src={Prnscr5}></Image>
+               <div>
+                  <LendBigTitle>
+                     Управляй голосом
+                  </LendBigTitle>
+                  <TopDesc>
+                     Пользуйся голосом для управления приложением
+                  </TopDesc>
+               </div>
+            </OpportunitiesContentLeft>
          </Wrapper>
       </Opportunities>
       <Tech />

@@ -16,7 +16,6 @@ import { TodoItemForm } from '../form';
 import { fetchDeleteTodo } from '../../../store/actions/deleteTodo';
 import { fetchComplateTodo } from '../../../store/actions/completeTodo';
 import { IRootState } from '../../../store/types/store';
-import { MobileMenu } from '../../general/menu';
 import { ModalVoiceInfo } from '../modalVoiceInfo';
 
 const TodoContainer = styled.div`
